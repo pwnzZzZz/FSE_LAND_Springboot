@@ -1,6 +1,7 @@
 package at.itkollegimst.studentenverwaltung;
 
 import at.itkollegimst.studentenverwaltung.domain.Student;
+import at.itkollegimst.studentenverwaltung.repositories.DbZugriffStudenten;
 import at.itkollegimst.studentenverwaltung.repositories.StudentJPARepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -8,6 +9,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//Nur noch abhängig vom dbZugriffStudenten interface
+//Die Klasse weiß nichts mehr vom SpringDataJPA
 @SpringBootApplication
 public class StudentenverwaltungApplication implements ApplicationRunner {
 
@@ -16,7 +19,7 @@ public class StudentenverwaltungApplication implements ApplicationRunner {
 	//das den vollen Datenbankzugriff ermöglicht
 	//Es müssen keine Objekte mehr mit new erstellt werden!
 	@Autowired
-	StudentJPARepo studentJPARepo;
+	DbZugriffStudenten dbZugriffStudenten;
 
 
 	public static void main(String[] args) {
@@ -25,10 +28,9 @@ public class StudentenverwaltungApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		//Zur Laufzeit injezierte Implementierung
-		//Standardmethoden des Repositories können verwendet werden, e.g. save
-		this.studentJPARepo.save(new Student("Marcel Schranz", "6471"));
-		this.studentJPARepo.save(new Student("Günter Hasel", "6460"));
-		this.studentJPARepo.save(new Student("Maria Brunsteiner", "8080"));
+
+		this.dbZugriffStudenten.studentSpeichern(new Student("Marcel Schranz", "6471"));
+		this.dbZugriffStudenten.studentSpeichern(new Student("Günter Hasel", "6460"));
+		this.dbZugriffStudenten.studentSpeichern(new Student("Maria Brunsteiner", "8080"));
 	}
 }
