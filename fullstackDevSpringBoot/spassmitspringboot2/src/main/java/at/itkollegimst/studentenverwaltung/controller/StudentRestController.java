@@ -17,7 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/studenten")
 //Erlaubt alle Anfragen von 127.0.0.1:5500!
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5500"})
+
 public class StudentRestController {
 
     private StudentenService studentenService;

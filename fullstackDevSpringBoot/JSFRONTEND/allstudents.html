@@ -29,6 +29,31 @@
 
     getAllData()
 
+
+    async function deleteStudent(id) {
+            try {
+
+                const response = await fetch('http://localhost:8080/api/v1/studenten/' + id,
+                    {
+                        method: 'DELETE',
+                        cache: 'no-cache',
+                        header: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                const data = await response.json()
+                getAllData()
+
+
+            } catch (exception) {
+                alter("Fehler beim Löschen des Studenten!")
+            }
+        }
+
+
+
+
+
     async function getAllData() {
 
         try {
@@ -65,18 +90,17 @@
                 id.innerHTML = student.id
                 name.innerHTML = student.name
                 plz.innerHTML = student.plz
-                action.innerHTML = ''
-
-
-            });
+                action.innerHTML = `<button type="button" class="btn btn-warning" onclick="deleteStudent(${student.id})">löschen</button>`
+            })
+            console.log(data)
 
         } catch (exception) {
             const table = document.getElementById('studentTable')
             table.innerHTML = "Studentendaten konnten nicht geladen werden"
         }
 
-        console.log(data)
 
+ 
     }
 
 
